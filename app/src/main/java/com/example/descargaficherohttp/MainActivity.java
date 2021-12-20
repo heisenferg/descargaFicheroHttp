@@ -10,6 +10,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -26,6 +27,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Button botn = findViewById(R.id.buttonDownload);
+        botn.setOnClickListener(this::descargar);
     }
 
     TextView txtDescarga;
@@ -48,8 +51,12 @@ public class MainActivity extends AppCompatActivity {
     public class DescargaPaginaWeb extends AsyncTask<String, Void, String>{
         // params viene del método execute() call: params[0] es la url.
         @Override
-        protected String doInBackground(String... strings) {
-            return null;
+        protected String doInBackground(String... urls) {
+            try {
+                return descargaURL(urls[0]);
+            } catch (IOException e) {
+                return "Imposible cargar, URL mal formada";
+            }
         }
         // onPostExecute visualiza los resultados del AsyncTask.
 
